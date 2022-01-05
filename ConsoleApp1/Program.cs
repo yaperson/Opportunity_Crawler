@@ -6,7 +6,12 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var scraper = new FastWebScraper();
+            var url = "https://yanis-projet.alwaysdata.net/veille.html";
+
+            var cards = scraper.GetCards(url);
+
+            Console.WriteLine(cards);
         }
     }
 }

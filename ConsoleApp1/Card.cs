@@ -8,5 +8,6 @@ namespace ConsoleApp1
     {
         public string Card_title { get; set; }
         public string Card_description { get; set; }
+        public int Card_date { get; set; }
     }
 }
