@@ -6,12 +6,12 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            var scraper = new FastWebScraper();
-            var url = "https://yanis-projet.alwaysdata.net/veille.html";
+            var scraper = new Crowler();
+            var url = "https://www.freelance-info.fr/missions?remote=1&page=1";
 
-            var cards = scraper.GetCards(url);
-
-            Console.WriteLine(cards);
+            var opportunities = scraper.GetOportunity(url);
+            
+            Console.WriteLine(opportunities);
         }
     }
 }
