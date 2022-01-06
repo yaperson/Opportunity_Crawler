@@ -10,6 +10,10 @@ namespace ConsoleApp1
         public List<Opportunity> GetOportunity(string url)
         {
             var uri = new Uri(url);
+            
+            var servicePoint = System.Net.ServicePointManager.FindServicePoint(uri);
+            servicePoint.ConnectionLimit = 40;
+            
             List<Opportunity> opportunities = new List<Opportunity>();
 
             HtmlWeb web = new HtmlWeb();
@@ -23,12 +27,11 @@ namespace ConsoleApp1
                 {
                     Opportunity_title = node.SelectSingleNode("/div[1]/div/div[1]/div[1]").InnerText,
                     Opportunity_description = node.SelectSingleNode("/div[1]/div/div[1]/div[2]").InnerText,
-                    Opportunity_date = int.Parse(node.SelectSingleNode("/div[1]/div/div[1]/span[2]").InnerText),
+                    //Opportunity_date = int.Parse(node.SelectSingleNode("/div[1]/div/div[1]/span[2]").InnerText),
                 };
                 opportunities.Add(opportunity);
             }
             //url = uri ;
-
             return opportunities;
         }   
     }
