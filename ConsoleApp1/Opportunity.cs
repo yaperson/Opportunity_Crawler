@@ -10,7 +10,8 @@ namespace ConsoleApp1
         public string Opportunity_title { get; set; }
         public string Opportunity_description { get; set; }
         public string Opportunity_link { get; set; }
-        public DateTime Opportunity_date { get; set; }
+        public string Opportunity_date { get; set; }
+        public string Opportunity_location { get; set; }
 
         // TODO
         // lien pour acceder a l'offre ** MAJ : Le lien est dans le titre, donc autant prendre le lien directement dedans

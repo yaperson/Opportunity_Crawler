@@ -10,22 +10,21 @@ namespace ConsoleApp1
     {
         public List<Opportunity> GetOportunity(string url)
         {
-            var uri = new Uri(url);
-            
-            //var servicePoint = System.Net.ServicePointManager.FindServicePoint(uri);
-            //servicePoint.ConnectionLimit = 40;
-            
             List<Opportunity> opportunities = new List<Opportunity>();
 
             HtmlWeb web = new HtmlWeb();
 
             var doc = web.Load(url);
 
+
             // var nodes = doc.DocumentNode.SelectNodes("/html/body/div[2]/main/div/div/div[1]/div[7]");
             // MLB : Voici ce que je te propose à la place. Si tu effectue des recherches sur XPath tu verra
             // qu'il est possible d'être très précis dans ce que tu recherches dans le DOM.
-            var nodes = doc.DocumentNode.SelectNodes("//a[starts-with(@href,'/mission/')]");
+            var nodes = doc.DocumentNode.SelectNodes("//*[@id='offre']/div/div[1]");
             if (nodes == null) throw new Exception("Aucun noeud ne correspond à la recherche");
+
+            var nextPage = doc.DocumentNode.SelectNodes("//*[@id='left - col']/nav/ul/li[2]/a");
+
 
             // Si après tu remonte de deux noeud, voici la structure HTML que l'on obtient avec toutes les infos nécessaires
             // qu'il ne reste plus qu'a targeter:
@@ -45,28 +44,39 @@ namespace ConsoleApp1
             //        <span> | 3 années | 500-550 €</span>
             //    </div>
             //</div>            
-
-            foreach (var node in nodes)
-            {
-                var opportunityUrl = node.GetAttributeValue("href", "");
-
-                var oportunityNode = node.ParentNode?.ParentNode;
-                if (oportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
-                
-                var opportunityLocation = oportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
-                var opportunityDate = oportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
-
-                // Je te laisse chercher pour isoler les 
-
-                var opportunity = new Opportunity
+                foreach (var node in nodes)
                 {
-                    Opportunity_title = node.SelectSingleNode("/div[1]/div/div[1]/div[1]").InnerText,
-                    Opportunity_description = node.SelectSingleNode("/div[1]/div/div[1]/div[2]").InnerText,
-                    //Opportunity_date = int.Parse(node.SelectSingleNode("/div[1]/div/div[1]/span[2]").InnerText),
-                };
-                opportunities.Add(opportunity);
-            }
-            //url = uri ;
+                    var opportunityUrl = node.GetAttributeValue("href", "");
+
+                    var oportunityNode = node.ParentNode?.ParentNode;
+                    if (oportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
+
+                    var opportunityTitle = oportunityNode.SelectSingleNode("//*[@id='titre-mission']/a").InnerText;
+                    var opportunityLocation = oportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/span[1]")?.InnerText;
+                    var opportunityDate = oportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/span[2]")?.InnerText;
+
+                    // Je te laisse chercher pour isoler les 
+
+                    //-------------------------------------
+                    // YLG : J'ai recopier du code betement, et je viens apene de remarquer que opportunity retourne une liste...
+                    // Je me demande si cette etape est réelement nécessaire 
+                    // je pourais simplement écrire directement dans un fichier Json ou XML ?
+                    
+
+                    var opportunity = new Opportunity
+                    {
+                        Opportunity_title = opportunityTitle,
+                        //Opportunity_description = node.SelectSingleNode("/div[1]/div/div[1]/div[2]").InnerText,
+                        Opportunity_date = opportunityDate,
+                        Opportunity_location = opportunityLocation,
+                    };
+                    opportunities.Add(opportunity);
+
+
+                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                    Console.WriteLine(opportunityTitle + " " + opportunityLocation + " " + opportunityDate);
+
+                }
             return opportunities;
         }   
     }
