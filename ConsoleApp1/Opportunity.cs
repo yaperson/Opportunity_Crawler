@@ -12,9 +12,10 @@ namespace ConsoleApp1
         public string url { get; set; }
         public string date { get; set; }
         public string location { get; set; }
+        public string tarif { get; set; }
 
         // TODO
-        // Durée / Tarif / Télétravail
+        // Télétravail
         // descriptif complet
         // profil recheché
         //-----------------

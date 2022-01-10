@@ -45,41 +45,44 @@ namespace ConsoleApp1
             //</div>    
                
             
-            var old = "!";
+            var oldUrl = "!";
 
             foreach (var node in nodes) 
             {
                 var Url = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
-                if (Url == old) continue;
-                old = Url;
+                if (Url == oldUrl) continue;
+                oldUrl = Url;
                 
                 var oportunityNode = node.ParentNode?.ParentNode;
                 if (oportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
 
-                var Title = "";
+                // cette condition servait à éviter les erreurs quand une URL était lue sans titre
+                /*var oportunityTitle = "";
                 if (oportunityNode.SelectSingleNode("div[@id='titre-mission']") is null) {
-                    Title = "";
-                } else Title = oportunityNode.SelectSingleNode("div[@id='titre-mission']").InnerText;
+                    continue;
+                } else oportunityTitle = oportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;*/
 
+                var oportunityTitle = oportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
                 var Location = oportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
                 var Date = oportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
                 var Description = oportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
+                var Tarif = oportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText; 
 
                 // Je te laisse chercher pour isoler les   
                 var opportunity = new Opportunity
                 {
-                    title = Title,
+                    title = oportunityTitle,
                     description = Description,
                     date = Date,
                     location = Location,
+                    tarif = Tarif,
                     url = Url,
                 };
                 opportunities.Add(opportunity);
 
 
                 Console.WriteLine("-----------------------------------------------------------------------------------------");
-                Console.WriteLine(node.InnerHtml);
-                Console.WriteLine(Location + " " + Date + " " + Description + " " + Title + " " + Url);
+                Console.WriteLine(Location + " " + Date + " " + Description + " " + oportunityTitle + " " + Tarif + " " + Url);
 
             }
             return opportunities;
