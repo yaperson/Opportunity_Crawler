@@ -7,11 +7,11 @@ namespace ConsoleApp1
 {
     public class Opportunity
     {
-        public string Opportunity_title { get; set; }
-        public string Opportunity_description { get; set; }
-        public string Opportunity_url { get; set; }
-        public string Opportunity_date { get; set; }
-        public string Opportunity_location { get; set; }
+        public string title { get; set; }
+        public string description { get; set; }
+        public string url { get; set; }
+        public string date { get; set; }
+        public string location { get; set; }
 
         // TODO
         // Lieu / Durée / Tarif / Télétravail

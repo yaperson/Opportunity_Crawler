@@ -7,7 +7,7 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
 
-            var scraper = new Crowler();
+            var scraper = new Crawler();
 
             string url = string.Format("https://www.freelance-info.fr/missions?remote=1&page=1");
             var opportunities = scraper.GetOportunity(url);

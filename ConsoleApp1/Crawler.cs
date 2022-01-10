@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ConsoleApp1
 {
-    public class Crowler
+    public class Crawler
     {
         public List<Opportunity> GetOportunity(string url)
         {
@@ -69,11 +69,11 @@ namespace ConsoleApp1
                 // Je te laisse chercher pour isoler les   
                 var opportunity = new Opportunity
                 {
-                    Opportunity_title = opportunityTitle,
-                    Opportunity_description = opportunityDescription,
-                    Opportunity_date = opportunityDate,
-                    Opportunity_location = opportunityLocation,
-                    Opportunity_url = opportunityUrl,
+                    title = opportunityTitle,
+                    description = opportunityDescription,
+                    date = opportunityDate,
+                    location = opportunityLocation,
+                    url = opportunityUrl,
                 };
                 opportunities.Add(opportunity);
 
