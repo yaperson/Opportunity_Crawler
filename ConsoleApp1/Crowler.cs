@@ -46,14 +46,14 @@ namespace ConsoleApp1
             //</div>    
                
             
-            var opportunityUrl = "";
+            var old = "!";
 
-            foreach (var node in nodes) // entre 5 fois dans la boucle... (il y a 5 lien par annonce, cela explique peut etre)
+            foreach (var node in nodes) 
             {
-                if (opportunityUrl != "") goto TestVar;
-
-                opportunityUrl = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
-
+                var opportunityUrl = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
+                if (opportunityUrl == old) continue;
+                old = opportunityUrl;
+                
                 var oportunityNode = node.ParentNode?.ParentNode;
                 if (oportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
 
@@ -64,12 +64,13 @@ namespace ConsoleApp1
 
                 var opportunityLocation = oportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
                 var opportunityDate = oportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
+                var opportunityDescription = oportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
 
                 // Je te laisse chercher pour isoler les   
                 var opportunity = new Opportunity
                 {
                     Opportunity_title = opportunityTitle,
-                    //Opportunity_description = node.SelectSingleNode("/div[1]/div/div[1]/div[2]").InnerText,
+                    Opportunity_description = opportunityDescription,
                     Opportunity_date = opportunityDate,
                     Opportunity_location = opportunityLocation,
                     Opportunity_url = opportunityUrl,
@@ -78,12 +79,8 @@ namespace ConsoleApp1
 
 
                 Console.WriteLine("-----------------------------------------------------------------------------------------");
-                Console.WriteLine(opportunityLocation + " " + opportunityDate + " " + opportunityTitle + " " + opportunityUrl);
-
-            TestVar:
-                var testUrl = opportunityUrl;
-                if (testUrl == opportunityUrl) opportunityUrl = ""; continue;
-
+                Console.WriteLine(node.InnerHtml);
+                Console.WriteLine(opportunityLocation + " " + opportunityDate + " " + opportunityDescription + " " + opportunityTitle + " " + opportunityUrl);
 
             }
             return opportunities;
