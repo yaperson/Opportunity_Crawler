@@ -17,7 +17,6 @@ namespace ConsoleApp1
             var doc = web.Load(url);
 
 
-            // var nodes = doc.DocumentNode.SelectNodes("/html/body/div[2]/main/div/div/div[1]/div[7]");
             // MLB : Voici ce que je te propose à la place. Si tu effectue des recherches sur XPath tu verra
             // qu'il est possible d'être très précis dans ce que tu recherches dans le DOM.
             var nodes = doc.DocumentNode.SelectNodes("//a[starts-with(@href,'/mission/')]");
@@ -50,37 +49,37 @@ namespace ConsoleApp1
 
             foreach (var node in nodes) 
             {
-                var opportunityUrl = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
-                if (opportunityUrl == old) continue;
-                old = opportunityUrl;
+                var Url = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
+                if (Url == old) continue;
+                old = Url;
                 
                 var oportunityNode = node.ParentNode?.ParentNode;
                 if (oportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
 
-                var opportunityTitle = "";
+                var Title = "";
                 if (oportunityNode.SelectSingleNode("div[@id='titre-mission']") is null) {
-                    opportunityTitle = "";
-                } else opportunityTitle = oportunityNode.SelectSingleNode("div[@id='titre-mission']").InnerText;
+                    Title = "";
+                } else Title = oportunityNode.SelectSingleNode("div[@id='titre-mission']").InnerText;
 
-                var opportunityLocation = oportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
-                var opportunityDate = oportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
-                var opportunityDescription = oportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
+                var Location = oportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
+                var Date = oportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
+                var Description = oportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
 
                 // Je te laisse chercher pour isoler les   
                 var opportunity = new Opportunity
                 {
-                    title = opportunityTitle,
-                    description = opportunityDescription,
-                    date = opportunityDate,
-                    location = opportunityLocation,
-                    url = opportunityUrl,
+                    title = Title,
+                    description = Description,
+                    date = Date,
+                    location = Location,
+                    url = Url,
                 };
                 opportunities.Add(opportunity);
 
 
                 Console.WriteLine("-----------------------------------------------------------------------------------------");
                 Console.WriteLine(node.InnerHtml);
-                Console.WriteLine(opportunityLocation + " " + opportunityDate + " " + opportunityDescription + " " + opportunityTitle + " " + opportunityUrl);
+                Console.WriteLine(Location + " " + Date + " " + Description + " " + Title + " " + Url);
 
             }
             return opportunities;

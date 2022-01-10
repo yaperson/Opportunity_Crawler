@@ -14,7 +14,7 @@ namespace ConsoleApp1
         public string location { get; set; }
 
         // TODO
-        // Lieu / Durée / Tarif / Télétravail
+        // Durée / Tarif / Télétravail
         // descriptif complet
         // profil recheché
         //-----------------
