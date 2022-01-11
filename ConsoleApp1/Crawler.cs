@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     public class Crawler
     {
-        public List<Opportunity> GetOportunity(string url)
+        public List<Opportunity> GetOpportunity(string url)
         {
             List<Opportunity> opportunities = new List<Opportunity>();
 
@@ -53,25 +53,25 @@ namespace ConsoleApp1
                 if (Url == oldUrl) continue;
                 oldUrl = Url;
                 
-                var oportunityNode = node.ParentNode?.ParentNode;
-                if (oportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
+                var opportunityNode = node.ParentNode?.ParentNode;
+                if (opportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
 
                 // cette condition servait à éviter les erreurs quand une URL était lue sans titre
-                /*var oportunityTitle = "";
-                if (oportunityNode.SelectSingleNode("div[@id='titre-mission']") is null) {
+                /*var opportunityTitle = "";
+                if (opportunityNode.SelectSingleNode("div[@id='titre-mission']") is null) {
                     continue;
-                } else oportunityTitle = oportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;*/
+                } else opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;*/
 
-                var oportunityTitle = oportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
-                var Location = oportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
-                var Date = oportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
-                var Description = oportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
-                var Tarif = oportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText; 
+                var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
+                var Location = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
+                var Date = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
+                var Description = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
+                var Tarif = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText; 
 
                 // Je te laisse chercher pour isoler les   
                 var opportunity = new Opportunity
                 {
-                    title = oportunityTitle,
+                    title = opportunityTitle,
                     description = Description,
                     date = Date,
                     location = Location,
@@ -82,7 +82,7 @@ namespace ConsoleApp1
 
 
                 Console.WriteLine("-----------------------------------------------------------------------------------------");
-                Console.WriteLine(Location + " " + Date + " " + Description + " " + oportunityTitle + " " + Tarif + " " + Url);
+                Console.WriteLine(Location + " " + Date + " " + Description + " " + opportunityTitle + " " + Tarif + " " + Url);
 
             }
             return opportunities;
