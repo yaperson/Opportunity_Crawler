@@ -16,83 +16,85 @@ namespace ConsoleApp1
 
             var doc = web.Load(url);
 
-
-            // MLB : Voici ce que je te propose à la place. Si tu effectue des recherches sur XPath tu verra
-            // qu'il est possible d'être très précis dans ce que tu recherches dans le DOM.
             var nodes = doc.DocumentNode.SelectNodes("//a[starts-with(@href,'/mission/')]");
             if (nodes == null) throw new Exception("Aucun noeud ne correspond à la recherche");
 
             var nextPage = doc.DocumentNode.SelectNodes("//*[@id='left - col']/nav/ul/li[2]/a");
-
-
-            // Si après tu remonte de deux noeud, voici la structure HTML que l'on obtient avec toutes les infos nécessaires
-            // qu'il ne reste plus qu'a targeter:
-            //<div class="col-9 pb-3 pt-3">
-            //    <div id="titre-mission">
-            //        <a class="rtitre filter-link" href="/mission/developpeur-java-reactjs-activepivot-h-f-1657224">Développeur Java ReactJs &amp; ActivePivot (H/F)
-            //        </a>
-            //    </div>
-            //    <span class="textvert9">Paris</span>
-            //    <span class="textgrisfonce9">06/01/2022</span><br>
-            //    <div class="text-justify">
-            //        Contexte :Dans le cadre d'un renfort, nous recherchons un(e) Développeur Java ReactJs &amp; ActivePivot (H/F)Projet:Votre intervenez sur un projet à forte valeur ajoutée dans le secteur bancaire ; Poste et missions: L'équipe travaille sur des applications intranet en technologie Java pour la partie ...
-            //        <a class="text-underline" href="/mission/developpeur-java-reactjs-activepivot-h-f-1657224">Voir plus</a>
-            //    </div>
-            //    <div class="rlig_det">
-            //        <span>Non lu</span>
-            //        <span> | 3 années | 500-550 €</span>
-            //    </div>
-            //</div>    
-               
-            
+          
             var oldUrl = "!";
 
             foreach (var node in nodes) 
             {
-                var Url = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
-                if (Url == oldUrl) continue;
-                oldUrl = Url;
-                
+                var opportunityUrl = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
+                if (opportunityUrl == oldUrl) continue;
+                oldUrl = opportunityUrl;
+
+                takeDetailOpportunity(opportunityUrl);
+
                 var opportunityNode = node.ParentNode?.ParentNode;
                 if (opportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
 
-                // cette condition servait à éviter les erreurs quand une URL était lue sans titre
-                //--------------------------
-                /*var opportunityTitle = "";
-                if (opportunityNode.SelectSingleNode("div[@id='titre-mission']") is null) {
-                    continue;
-                } else opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;*/
-
-                var idIndex = Url.LastIndexOf('-');
-                string opportunityId = Url.Substring(idIndex, 7);
+                var idIndex = opportunityUrl.LastIndexOf('-');
+                string opportunityId = opportunityUrl.Substring(idIndex, 7);
                 opportunityId = opportunityId.Substring(1, 6);
 
                 var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
-                var Location = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
-                var Date = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
-                var Description = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
-                var Tarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText; 
+                var opportunityLocation = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
+                var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
+                var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
+                var opportunityTarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
 
-                // Je te laisse chercher pour isoler les   
+                
                 var opportunity = new Opportunity
                 {
                     id = opportunityId,
                     title = opportunityTitle,
-                    description = Description,
-                    date = Date,
-                    location = Location,
-                    tarifs = Tarifs,
-                    url = Url,
+                    description = opportunityDescription,
+                    date = opportunityDate,
+                    location = opportunityLocation,
+                    tarifs = opportunityTarifs,
+                    url = opportunityUrl,
                 };
                 opportunities.Add(opportunity);
 
 
                 Console.WriteLine("-----------------------------------------------------------------------------------------");
-                Console.WriteLine( " TITRE =  " + opportunityTitle + Location + " " + Date + " DUREE / TARIFS = " + Tarifs + " ID = " + opportunityId);
-                Console.WriteLine(" DESCRIPTION = " + Description);
-                Console.WriteLine(" URL = " + Url);
+                Console.WriteLine( " TITRE =  " + opportunityTitle + opportunityLocation + " " + opportunityDate + " DUREE / TARIFS = " + opportunityTarifs + " ID = " + opportunityId);
+                Console.WriteLine(" DESCRIPTION = " + opportunityDescription);
+                Console.WriteLine(" URL = " + opportunityUrl);
             }
             return opportunities;
         } 
+        public void takeDetailOpportunity(string Url)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("======================================START takeDetailOpportunity======================================");
+            Console.WriteLine("||                                                                                                   ||");
+            Console.WriteLine("||  Inner takeDetailOpportunity "+Url+ " is good !!");
+            Console.WriteLine("||                                                                                                   ||");
+            Console.WriteLine("======================================START takeDetailOpportunity======================================");
+            Console.WriteLine("");
+            
+            HtmlWeb web = new HtmlWeb();
+
+            var doc = web.Load(Url);
+
+            var nodes = doc.DocumentNode.SelectNodes("//div[@id='left-col']");
+            if (nodes == null) throw new Exception("Aucun noeud ne correspond à la recherche");
+
+            foreach (var node in nodes)
+            {
+                var detailNode = node.ParentNode?.ParentNode;
+                if (detailNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
+
+                var detailDate = detailNode.SelectSingleNode("//div[@class='textnoir9']")?.InnerText;
+                var detailTeletravail = detailNode.SelectSingleNode("//div[@ class='row']/div[@ class='col-8 left']")?.InnerText;
+                var detailDescription = detailNode.SelectSingleNode("//div[@ class='textnoir9 mt-3']")?.InnerText;
+
+                Console.WriteLine(detailDate + " " + detailTeletravail + " " + detailDescription);
+
+            }
+
+        }
     }
 }
