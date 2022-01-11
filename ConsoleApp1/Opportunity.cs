@@ -12,7 +12,7 @@ namespace ConsoleApp1
         public string url { get; set; }
         public string date { get; set; }
         public string location { get; set; }
-        public string tarif { get; set; }
+        public string tarifs { get; set; }
 
         // TODO
         // Télétravail

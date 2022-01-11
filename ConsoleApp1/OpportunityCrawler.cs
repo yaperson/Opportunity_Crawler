@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ConsoleApp1
 {
-    public class Crawler
+    public class OpportunityCrawler
     {
         public List<Opportunity> GetOpportunity(string url)
         {
@@ -57,16 +57,21 @@ namespace ConsoleApp1
                 if (opportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
 
                 // cette condition servait à éviter les erreurs quand une URL était lue sans titre
+                //--------------------------
                 /*var opportunityTitle = "";
                 if (opportunityNode.SelectSingleNode("div[@id='titre-mission']") is null) {
                     continue;
                 } else opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;*/
 
+                var idIndex = Url.LastIndexOf('-');
+                string opportunityId = Url.Substring(idIndex, 7);
+                opportunityId = opportunityId.Substring(1, 6);
+
                 var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
                 var Location = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
                 var Date = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
                 var Description = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
-                var Tarif = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText; 
+                var Tarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText; 
 
                 // Je te laisse chercher pour isoler les   
                 var opportunity = new Opportunity
@@ -75,15 +80,16 @@ namespace ConsoleApp1
                     description = Description,
                     date = Date,
                     location = Location,
-                    tarif = Tarif,
+                    tarifs = Tarifs,
                     url = Url,
                 };
                 opportunities.Add(opportunity);
 
 
                 Console.WriteLine("-----------------------------------------------------------------------------------------");
-                Console.WriteLine(Location + " " + Date + " " + Description + " " + opportunityTitle + " " + Tarif + " " + Url);
-
+                Console.WriteLine( " TITRE =  " + opportunityTitle + Location + " " + Date + " DUREE / TARIFS = " + Tarifs + " ID = " + opportunityId);
+                Console.WriteLine(" DESCRIPTION = " + Description);
+                Console.WriteLine(" URL = " + Url);
             }
             return opportunities;
         } 
