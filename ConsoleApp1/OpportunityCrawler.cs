@@ -76,6 +76,7 @@ namespace ConsoleApp1
                 // Je te laisse chercher pour isoler les   
                 var opportunity = new Opportunity
                 {
+                    id = opportunityId,
                     title = opportunityTitle,
                     description = Description,
                     date = Date,
