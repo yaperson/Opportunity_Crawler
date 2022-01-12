@@ -21,7 +21,11 @@ namespace ConsoleApp1
             var nodes = doc.DocumentNode.SelectNodes("//a[starts-with(@href,'/mission/')]");
             if (nodes == null) throw new Exception("Aucun noeud ne correspond à la recherche");
 
+            DateTime newDate = DateTime.Today;
+            Console.WriteLine(newDate);
+
             var oldUrl = "!";
+
             foreach (var node in nodes)
             {
                 var opportunityUrl = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
@@ -37,9 +41,14 @@ namespace ConsoleApp1
                 string opportunityId = opportunityUrl.Substring(idIndex, 7);
                 opportunityId = opportunityId.Substring(1, 6);
 
+                var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
+                var opportunityParsedDate = DateTime.Parse(opportunityDate);
+                int compareDate = DateTime.Compare(newDate, opportunityParsedDate);
+                if (compareDate > 2) break;
+                
+                
                 var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
                 var opportunityLocation = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
-                var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
                 var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
                 var opportunityTarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
 
