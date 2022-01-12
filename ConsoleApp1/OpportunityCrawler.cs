@@ -14,16 +14,17 @@ namespace ConsoleApp1
 
             HtmlWeb web = new HtmlWeb();
 
-            var doc = web.Load(url);
+            int indexPage = 1;
+
+            var doc = web.Load(url+indexPage);
 
             var nodes = doc.DocumentNode.SelectNodes("//a[starts-with(@href,'/mission/')]");
             if (nodes == null) throw new Exception("Aucun noeud ne correspond à la recherche");
 
-            var nextPage = doc.DocumentNode.SelectNodes("//*[@id='left - col']/nav/ul/li[2]/a");
-          
-            var oldUrl = "!";
+            // var nextPage = doc.DocumentNode.SelectNodes("//*[@id='left - col']/nav/ul/li[2]/a");
 
-            foreach (var node in nodes) 
+            var oldUrl = "!";
+            foreach (var node in nodes)
             {
                 var opportunityUrl = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
                 if (opportunityUrl == oldUrl) continue;
@@ -44,24 +45,24 @@ namespace ConsoleApp1
                 var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
                 var opportunityTarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
 
-                
-                var opportunity = new Opportunity
-                {
-                    id = opportunityId,
-                    title = opportunityTitle,
-                    description = opportunityDescription,
-                    date = opportunityDate,
-                    location = opportunityLocation,
-                    tarifs = opportunityTarifs,
-                    url = opportunityUrl,
-                };
-                opportunities.Add(opportunity);
+
+                    var opportunity = new Opportunity
+                    {
+                        id = opportunityId,
+                        title = opportunityTitle,
+                        description = opportunityDescription,
+                        date = opportunityDate,
+                        location = opportunityLocation,
+                        tarifs = opportunityTarifs,
+                        url = opportunityUrl,
+                    };
+                    opportunities.Add(opportunity);
 
 
-                Console.WriteLine("-----------------------------------------------------------------------------------------");
-                Console.WriteLine( " TITRE =  " + opportunityTitle + opportunityLocation + " " + opportunityDate + " DUREE / TARIFS = " + opportunityTarifs + " ID = " + opportunityId);
-                Console.WriteLine(" DESCRIPTION = " + opportunityDescription);
-                Console.WriteLine(" URL = " + opportunityUrl);
+                    Console.WriteLine("-----------------------------------------------------------------------------------------");
+                    Console.WriteLine(" TITRE =  " + opportunityTitle + opportunityLocation + " " + opportunityDate + " DUREE / TARIFS = " + opportunityTarifs + " ID = " + opportunityId);
+                    Console.WriteLine(" DESCRIPTION = " + opportunityDescription);
+                    Console.WriteLine(" URL = " + opportunityUrl);
             }
             return opportunities;
         } 
@@ -70,7 +71,7 @@ namespace ConsoleApp1
             Console.WriteLine("");
             Console.WriteLine("======================================START takeDetailOpportunity======================================");
             Console.WriteLine("||                                                                                                   ||");
-            Console.WriteLine("||  Inner takeDetailOpportunity "+Url+ " is good !!");
+            Console.WriteLine("||  Inner takeDetailOpportunity "+Url+ " link is good !!");
             Console.WriteLine("||                                                                                                   ||");
             Console.WriteLine("======================================START takeDetailOpportunity======================================");
             Console.WriteLine("");
@@ -88,12 +89,27 @@ namespace ConsoleApp1
                 if (detailNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
 
                 var detailDate = detailNode.SelectSingleNode("//div[@class='textnoir9']")?.InnerText;
-                var detailTeletravail = detailNode.SelectSingleNode("//div[@ class='row']/div[@ class='col-8 left']")?.InnerText;
+                var detailAll = detailNode.SelectSingleNode("//div[@ class='row']/div[@ class='col-8 left']")?.InnerText;
+                var indexTeletravail = detailAll.LastIndexOf('%');
+                var detailTeletravail = detailAll.Substring(indexTeletravail, 3);
+
                 var detailDescription = detailNode.SelectSingleNode("//div[@ class='textnoir9 mt-3']")?.InnerText;
 
-                Console.WriteLine(detailDate + " " + detailTeletravail + " " + detailDescription);
+                Console.WriteLine(detailDate + " " + detailTeletravail + " ");
 
             }
+
+        }
+        public void compareWord(string opportunityDescription, bool wordScan)
+        {
+            if (String.Compare(opportunityDescription, "client") == -1)
+            {
+                Console.WriteLine();
+                wordScan = true;
+            }
+        }
+        public void loadNextPage(string url)
+        {
 
         }
     }
