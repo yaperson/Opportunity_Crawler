@@ -8,20 +8,18 @@ namespace ConsoleApp1
 {
     public class OpportunityCrawler
     {
-        public List<Opportunity> GetOpportunity(string url)
+        public List<Opportunity> GetOpportunity(string url, int tockenUrl)
         {
             List<Opportunity> opportunities = new List<Opportunity>();
 
             HtmlWeb web = new HtmlWeb();
 
-            int indexPage = 1;
+            url = url + tockenUrl;
 
-            var doc = web.Load(url+indexPage);
+            var doc = web.Load(url);
 
             var nodes = doc.DocumentNode.SelectNodes("//a[starts-with(@href,'/mission/')]");
             if (nodes == null) throw new Exception("Aucun noeud ne correspond à la recherche");
-
-            // var nextPage = doc.DocumentNode.SelectNodes("//*[@id='left - col']/nav/ul/li[2]/a");
 
             var oldUrl = "!";
             foreach (var node in nodes)
@@ -64,6 +62,7 @@ namespace ConsoleApp1
                     Console.WriteLine(" DESCRIPTION = " + opportunityDescription);
                     Console.WriteLine(" URL = " + opportunityUrl);
             }
+            loadNextPage(tockenUrl);
             return opportunities;
         } 
         public void takeDetailOpportunity(string Url)
@@ -95,7 +94,7 @@ namespace ConsoleApp1
 
                 var detailDescription = detailNode.SelectSingleNode("//div[@ class='textnoir9 mt-3']")?.InnerText;
 
-                Console.WriteLine(detailDate + " " + detailTeletravail + " ");
+                Console.WriteLine(detailDate + " " + detailTeletravail + " " + detailDescription);
 
             }
 
@@ -108,9 +107,14 @@ namespace ConsoleApp1
                 wordScan = true;
             }
         }
-        public void loadNextPage(string url)
+        public void loadNextPage(int tockenUrl)
         {
-
+            Console.WriteLine("[=====================================================================================]");
+            Console.WriteLine("[--------------------------           NEXT PAGE          -----------------------------]");
+            Console.WriteLine("[=====================================================================================]");
+            tockenUrl = tockenUrl+1;
+            string url = "https://www.freelance-info.fr/missions?remote=1&page=";
+            GetOpportunity(url, tockenUrl);
         }
     }
 }
