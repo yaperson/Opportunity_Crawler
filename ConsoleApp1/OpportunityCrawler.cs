@@ -41,6 +41,10 @@ namespace ConsoleApp1
                 string opportunityId = opportunityUrl.Substring(idIndex, 7);
                 opportunityId = opportunityId.Substring(1, 6);
 
+                var opportunityStatus = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[1]")?.InnerText;
+                var opportunityStatusRead = "Lu";
+                if (opportunityStatus == opportunityStatusRead) break;
+
                 var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
                 var opportunityParsedDate = DateTime.Parse(opportunityDate);
                 int compareDate = DateTime.Compare(newDate, opportunityParsedDate);
@@ -71,7 +75,21 @@ namespace ConsoleApp1
                     Console.WriteLine(" DESCRIPTION = " + opportunityDescription);
                     Console.WriteLine(" URL = " + opportunityUrl);
             }
-            loadNextPage(tockenUrl);
+
+            // Petite sécuritée car ça m'ai arrivé d'oublier de stopper le programme...
+            if (tockenUrl < 1) loadNextPage(tockenUrl);
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("");
+                Console.WriteLine("+---------------------------+");
+                Console.WriteLine("|       "+tockenUrl+" pages scanés      |");
+                Console.WriteLine("+---------------------------+");
+                Console.WriteLine("");
+                Console.WriteLine("");
+
+            }
+
             return opportunities;
         } 
         public void takeDetailOpportunity(string Url)
