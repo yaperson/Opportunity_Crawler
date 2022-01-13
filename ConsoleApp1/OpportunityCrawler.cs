@@ -8,13 +8,13 @@ namespace ConsoleApp1
 {
     public class OpportunityCrawler
     {
-        public List<Opportunity> GetOpportunity(string url, int tockenUrl)
+        public List<Opportunity> GetOpportunity(string url, int tokenUrl)
         {
             List<Opportunity> opportunities = new List<Opportunity>();
 
             HtmlWeb web = new HtmlWeb();
 
-            url = url + tockenUrl;
+            url = url + tokenUrl;
 
             var doc = web.Load(url);
 
@@ -77,13 +77,13 @@ namespace ConsoleApp1
             }
 
             // Petite sécuritée car ça m'ai arrivé d'oublier de stopper le programme...
-            if (tockenUrl < 20) loadNextPage(tockenUrl);
+            if (tokenUrl < 20) loadNextPage(tokenUrl);
             else
             {
                 Console.WriteLine("");
                 Console.WriteLine("");
                 Console.WriteLine("+---------------------------+");
-                Console.WriteLine("|       "+tockenUrl+" pages scanés      |");
+                Console.WriteLine("|       "+ tokenUrl + " pages scanés      |");
                 Console.WriteLine("+---------------------------+");
                 Console.WriteLine("");
                 Console.WriteLine("");
@@ -134,14 +134,14 @@ namespace ConsoleApp1
                 wordScan = true;
             }
         }
-        public void loadNextPage(int tockenUrl)
+        public void loadNextPage(int tokenUrl)
         {
             Console.WriteLine("[=====================================================================================]");
             Console.WriteLine("[--------------------------           NEXT PAGE          -----------------------------]");
             Console.WriteLine("[=====================================================================================]");
-            tockenUrl = tockenUrl+1;
+            tokenUrl = tokenUrl + 1;
             string url = "https://www.freelance-info.fr/missions?remote=1&page=";
-            GetOpportunity(url, tockenUrl);
+            GetOpportunity(url, tokenUrl);
         }
     }
 }
