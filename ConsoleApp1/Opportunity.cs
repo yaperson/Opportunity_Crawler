@@ -15,10 +15,6 @@ namespace ConsoleApp1
         public string location { get; set; }
         public string tarifs { get; set; }
 
-        // TODO
-        // Télétravail
-        // descriptif complet
-        // profil recheché
         //-----------------
         // j'ai remarqué que chaque anonce a déja son id indiqué dans la bare du navigateur 
         // exemple : dev-fullstack-java-angular-1657124

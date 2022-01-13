@@ -47,8 +47,8 @@ namespace ConsoleApp1
 
                 var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
                 var opportunityParsedDate = DateTime.Parse(opportunityDate);
-                int compareDate = DateTime.Compare(newDate, opportunityParsedDate);
-                if (compareDate > 2) break;
+                int compareDate = (opportunityParsedDate - newDate).Days;
+                if (compareDate > 1) break;
                 
                 
                 var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
@@ -77,7 +77,7 @@ namespace ConsoleApp1
             }
 
             // Petite sécuritée car ça m'ai arrivé d'oublier de stopper le programme...
-            if (tockenUrl < 1) loadNextPage(tockenUrl);
+            if (tockenUrl < 20) loadNextPage(tockenUrl);
             else
             {
                 Console.WriteLine("");
