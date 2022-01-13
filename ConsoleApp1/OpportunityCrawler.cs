@@ -14,47 +14,49 @@ namespace ConsoleApp1
 
             HtmlWeb web = new HtmlWeb();
 
-            url = url + tokenUrl;
-
-            var doc = web.Load(url);
-
-            var nodes = doc.DocumentNode.SelectNodes("//a[starts-with(@href,'/mission/')]");
-            if (nodes == null) throw new Exception("Aucun noeud ne correspond à la recherche");
-
-            DateTime newDate = DateTime.Today;
-            Console.WriteLine(newDate);
-
-            var oldUrl = "!";
-
-            foreach (var node in nodes)
+            while (tokenUrl < 3)
             {
-                var opportunityUrl = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
-                if (opportunityUrl == oldUrl) continue;
-                oldUrl = opportunityUrl;
+                url = url + tokenUrl;
 
-                takeDetailOpportunity(opportunityUrl);
+                var doc = web.Load(url);
 
-                var opportunityNode = node.ParentNode?.ParentNode;
-                if (opportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
+                var nodes = doc.DocumentNode.SelectNodes("//a[starts-with(@href,'/mission/')]");
+                if (nodes == null) throw new Exception("Aucun noeud ne correspond à la recherche");
 
-                var idIndex = opportunityUrl.LastIndexOf('-');
-                string opportunityId = opportunityUrl.Substring(idIndex, 7);
-                opportunityId = opportunityId.Substring(1, 6);
+                DateTime newDate = DateTime.Today;
+                Console.WriteLine(newDate);
 
-                var opportunityStatus = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[1]")?.InnerText;
-                var opportunityStatusRead = "Lu";
-                if (opportunityStatus == opportunityStatusRead) break;
+                var oldUrl = "!";
 
-                var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
-                var opportunityParsedDate = DateTime.Parse(opportunityDate);
-                int compareDate = (opportunityParsedDate - newDate).Days;
-                if (compareDate > 1) break;
-                
-                
-                var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
-                var opportunityLocation = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
-                var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
-                var opportunityTarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
+                foreach (var node in nodes)
+                {
+                    var opportunityUrl = "https://www.freelance-info.fr" + node.GetAttributeValue("href", "");
+                    if (opportunityUrl == oldUrl) continue;
+                    oldUrl = opportunityUrl;
+
+                    takeDetailOpportunity(opportunityUrl);
+
+                    var opportunityNode = node.ParentNode?.ParentNode;
+                    if (opportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
+
+                    var idIndex = opportunityUrl.LastIndexOf('-');
+                    string opportunityId = opportunityUrl.Substring(idIndex, 7);
+                    opportunityId = opportunityId.Substring(1, 6);
+
+                    var opportunityStatus = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[1]")?.InnerText;
+                    var opportunityStatusRead = "Lu";
+                    if (opportunityStatus == opportunityStatusRead) break;
+
+                    var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
+                    var opportunityParsedDate = DateTime.Parse(opportunityDate);
+                    int compareDate = (opportunityParsedDate - newDate).Days;
+                    if (compareDate > 1) break;
+
+
+                    var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
+                    var opportunityLocation = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
+                    var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
+                    var opportunityTarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
 
 
                     var opportunity = new Opportunity
@@ -74,21 +76,21 @@ namespace ConsoleApp1
                     Console.WriteLine(" TITRE =  " + opportunityTitle + opportunityLocation + " " + opportunityDate + " DUREE / TARIFS = " + opportunityTarifs + " ID = " + opportunityId);
                     Console.WriteLine(" DESCRIPTION = " + opportunityDescription);
                     Console.WriteLine(" URL = " + opportunityUrl);
+                }
+                //loadNextPage(tokenUrl);
+                Console.WriteLine("[=====================================================================================]");
+                Console.WriteLine("[--------------------------           NEXT PAGE          -----------------------------]");
+                Console.WriteLine("[=====================================================================================]");
+                tokenUrl = tokenUrl + 1;
             }
 
-            // Petite sécuritée car ça m'ai arrivé d'oublier de stopper le programme...
-            if (tokenUrl < 20) loadNextPage(tokenUrl);
-            else
-            {
-                Console.WriteLine("");
-                Console.WriteLine("");
-                Console.WriteLine("+---------------------------+");
-                Console.WriteLine("|       "+ tokenUrl + " pages scanés      |");
-                Console.WriteLine("+---------------------------+");
-                Console.WriteLine("");
-                Console.WriteLine("");
-
-            }
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("+---------------------------+");
+            Console.WriteLine("|       " + tokenUrl + " pages scanés      |");
+            Console.WriteLine("+---------------------------+");
+            Console.WriteLine("");
+            Console.WriteLine("");
 
             return opportunities;
         } 
@@ -134,6 +136,7 @@ namespace ConsoleApp1
                 wordScan = true;
             }
         }
+        /*
         public void loadNextPage(int tokenUrl)
         {
             Console.WriteLine("[=====================================================================================]");
@@ -143,5 +146,6 @@ namespace ConsoleApp1
             string url = "https://www.freelance-info.fr/missions?remote=1&page=";
             GetOpportunity(url, tokenUrl);
         }
+        */
     }
 }
