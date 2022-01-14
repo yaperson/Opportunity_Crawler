@@ -14,7 +14,7 @@ namespace ConsoleApp1
 
             HtmlWeb web = new HtmlWeb();
 
-            while (tokenUrl < 3)
+            while (tokenUrl < 4)
             {
                 url = url + tokenUrl;
 
@@ -34,7 +34,9 @@ namespace ConsoleApp1
                     if (opportunityUrl == oldUrl) continue;
                     oldUrl = opportunityUrl;
 
-                    takeDetailOpportunity(opportunityUrl);
+                    
+                    var takeDetail = takeDetailOpportunity(opportunityUrl);
+                    
 
                     var opportunityNode = node.ParentNode?.ParentNode;
                     if (opportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
@@ -58,6 +60,9 @@ namespace ConsoleApp1
                     var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
                     var opportunityTarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
 
+                    Console.WriteLine("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
+                    Console.WriteLine(takeDetail[0]);
+                    Console.WriteLine("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 
                     var opportunity = new Opportunity
                     {
@@ -93,23 +98,25 @@ namespace ConsoleApp1
             Console.WriteLine("");
 
             return opportunities;
-        } 
-        public void takeDetailOpportunity(string Url)
+        }
+        public string[] takeDetailOpportunity(string Url)
         {
             Console.WriteLine("");
             Console.WriteLine("======================================START takeDetailOpportunity======================================");
             Console.WriteLine("||                                                                                                   ||");
-            Console.WriteLine("||  Inner takeDetailOpportunity "+Url+ " link is good !!");
+            Console.WriteLine("||  Inner takeDetailOpportunity " + Url + " link is good !!");
             Console.WriteLine("||                                                                                                   ||");
             Console.WriteLine("======================================START takeDetailOpportunity======================================");
             Console.WriteLine("");
-            
+
             HtmlWeb web = new HtmlWeb();
 
             var doc = web.Load(Url);
 
             var nodes = doc.DocumentNode.SelectNodes("//div[@id='left-col']");
             if (nodes == null) throw new Exception("Aucun noeud ne correspond à la recherche");
+
+            string[] detailOpportunity = { };
 
             foreach (var node in nodes)
             {
@@ -123,9 +130,12 @@ namespace ConsoleApp1
 
                 var detailDescription = detailNode.SelectSingleNode("//div[@ class='textnoir9 mt-3']")?.InnerText;
 
-                Console.WriteLine(detailDate + " " + detailTeletravail + " " + detailDescription);
+                // Console.WriteLine(detailDate + " " + detailTeletravail + " " + detailDescription);
 
+                detailOpportunity = new string[] { detailDate, detailDescription, detailTeletravail, detailAll };
             }
+
+            return detailOpportunity;
 
         }
         public void compareWord(string opportunityDescription, bool wordScan)
