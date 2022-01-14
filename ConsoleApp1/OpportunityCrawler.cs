@@ -134,17 +134,5 @@ namespace ConsoleApp1
             return detailOpportunity;
 
         }
-        /*
-        /*
-        public void loadNextPage(int tokenUrl)
-        {
-            Console.WriteLine("[=====================================================================================]");
-            Console.WriteLine("[--------------------------           NEXT PAGE          -----------------------------]");
-            Console.WriteLine("[=====================================================================================]");
-            tokenUrl = tokenUrl + 1;
-            string url = "https://www.freelance-info.fr/missions?remote=1&page=";
-            GetOpportunity(url, tokenUrl);
-        }
-        */
     }
 }
