@@ -14,7 +14,7 @@ namespace ConsoleApp1
 
             HtmlWeb web = new HtmlWeb();
 
-            while (tokenUrl < 4)
+            while (tokenUrl < 50)
             {
                 url = url + tokenUrl;
 
@@ -51,7 +51,8 @@ namespace ConsoleApp1
 
                     var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
                     var opportunityParsedDate = DateTime.Parse(opportunityDate);
-                    int compareDate = (opportunityParsedDate - newDate).Days;
+                    int compareDate = (newDate - opportunityParsedDate).Days;
+                    Console.WriteLine(compareDate);
                     if (compareDate > 1) break;
 
 
@@ -59,10 +60,6 @@ namespace ConsoleApp1
                     var opportunityLocation = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
                     var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
                     var opportunityTarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
-
-                    Console.WriteLine("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
-                    Console.WriteLine(takeDetail[0]);
-                    Console.WriteLine("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 
                     var opportunity = new Opportunity
                     {
@@ -73,6 +70,7 @@ namespace ConsoleApp1
                         location = opportunityLocation,
                         tarifs = opportunityTarifs,
                         url = opportunityUrl,
+                        detailDescription = takeDetail[1],
                     };
                     opportunities.Add(opportunity);
 
@@ -129,8 +127,6 @@ namespace ConsoleApp1
                 var detailTeletravail = detailAll.Substring(indexTeletravail, 3);
 
                 var detailDescription = detailNode.SelectSingleNode("//div[@ class='textnoir9 mt-3']")?.InnerText;
-
-                // Console.WriteLine(detailDate + " " + detailTeletravail + " " + detailDescription);
 
                 detailOpportunity = new string[] { detailDate, detailDescription, detailTeletravail, detailAll };
             }
