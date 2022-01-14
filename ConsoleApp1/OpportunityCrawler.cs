@@ -14,7 +14,7 @@ namespace ConsoleApp1
 
             HtmlWeb web = new HtmlWeb();
 
-            while (tokenUrl < 50)
+            while (tokenUrl < 3)
             {
                 url = url + tokenUrl;
 
@@ -134,14 +134,7 @@ namespace ConsoleApp1
             return detailOpportunity;
 
         }
-        public void compareWord(string opportunityDescription, bool wordScan)
-        {
-            if (String.Compare(opportunityDescription, "client") == -1)
-            {
-                Console.WriteLine();
-                wordScan = true;
-            }
-        }
+        /*
         /*
         public void loadNextPage(int tokenUrl)
         {
