@@ -137,32 +137,25 @@ namespace ConsoleApp1
         }
         public void compareWord (string detailAll)
         {
-            Console.WriteLine("...bip boup bip...");
-            Console.WriteLine("//     analyse du contenu de l'annonce      //");
-
+            Console.WriteLine(" /--------------------------------------------/");
+            Console.WriteLine("//     analyse du contenu de l'annonce       //");
+            Console.WriteLine("/--------------------------------------------/");
 
             string[] sentences = detailAll.Split(new char[] { '.', '?', '!' });
-
-            // Define the search terms. This list could also be dynamically populated at run time.  
             string[] wordsToMatch = { "développeur", "client" };
             
-            // Find sentences that contain all the terms in the wordsToMatch array.  
-            // Note that the number of terms to match is not specified at compile time.  
             var sentenceQuery = from sentence in sentences
                                 let w = sentence.Split(new char[] {'.', '?', '!', ' ', ';', ':', ',' },
                                                         StringSplitOptions.RemoveEmptyEntries)
                                 where w.Distinct().Intersect(wordsToMatch).Count() == wordsToMatch.Count()
                                 select sentence;
 
-            // Execute the query. Note that you can explicitly type  
-            // the iteration variable here even though sentenceQuery  
-            // was implicitly typed.
             foreach (var str in sentenceQuery)
             {
                 Console.WriteLine(str);
                 Console.WriteLine(sentenceQuery);
             }
-            Console.WriteLine("DING ! c'est cuit !!");
+            Console.WriteLine("");
         }
     }
 }
