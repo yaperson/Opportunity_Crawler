@@ -14,7 +14,7 @@ namespace ConsoleApp1
 
             HtmlWeb web = new HtmlWeb();
 
-            while (tokenUrl < 3)
+            while (tokenUrl < 3) // scanne le nombre -1 (si on met 3, ça crawl sur 2 pages)
             {
                 url = url + tokenUrl;
 
@@ -36,7 +36,8 @@ namespace ConsoleApp1
 
                     
                     var takeDetail = takeDetailOpportunity(opportunityUrl);
-                    
+                    compareWord(takeDetail[1]);
+
 
                     var opportunityNode = node.ParentNode?.ParentNode;
                     if (opportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
@@ -131,8 +132,37 @@ namespace ConsoleApp1
                 detailOpportunity = new string[] { detailDate, detailDescription, detailTeletravail, detailAll };
             }
 
-            return detailOpportunity;
 
+            return detailOpportunity;
+        }
+        public void compareWord (string detailAll)
+        {
+            Console.WriteLine("...bip boup bip...");
+            Console.WriteLine("//     analyse du contenu de l'annonce      //");
+
+
+            string[] sentences = detailAll.Split(new char[] { '.', '?', '!' });
+
+            // Define the search terms. This list could also be dynamically populated at run time.  
+            string[] wordsToMatch = { "développeur", "client" };
+            
+            // Find sentences that contain all the terms in the wordsToMatch array.  
+            // Note that the number of terms to match is not specified at compile time.  
+            var sentenceQuery = from sentence in sentences
+                                let w = sentence.Split(new char[] {'.', '?', '!', ' ', ';', ':', ',' },
+                                                        StringSplitOptions.RemoveEmptyEntries)
+                                where w.Distinct().Intersect(wordsToMatch).Count() == wordsToMatch.Count()
+                                select sentence;
+
+            // Execute the query. Note that you can explicitly type  
+            // the iteration variable here even though sentenceQuery  
+            // was implicitly typed.
+            foreach (var str in sentenceQuery)
+            {
+                Console.WriteLine(str);
+                Console.WriteLine(sentenceQuery);
+            }
+            Console.WriteLine("DING ! c'est cuit !!");
         }
     }
 }
