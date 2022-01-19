@@ -36,7 +36,7 @@ namespace ConsoleApp1
 
                     
                     var takeDetail = takeDetailOpportunity(opportunityUrl);
-                    compareWord(takeDetail[1]);
+                    //compareWord(takeDetail[1]);
 
 
                     var opportunityNode = node.ParentNode?.ParentNode;
@@ -62,18 +62,35 @@ namespace ConsoleApp1
                     var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
                     var opportunityTarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
 
-                    var opportunity = new Opportunity
+
+                    string[] sentences = takeDetail[1].Split(new char[] { '.', '?', '!' });
+                    string[] wordsToMatch = { "client" };
+
+                    var sentenceQuery = from sentence in sentences
+                                        let w = sentence.Split(new char[] { '.', '?', '!', ' ', ';', ':', ',' },
+                                                                StringSplitOptions.RemoveEmptyEntries)
+                                        where w.Distinct().Intersect(wordsToMatch).Count() == wordsToMatch.Count()
+                                        select sentence;
+
+                    foreach (var str in sentenceQuery)
                     {
-                        id = opportunityId,
-                        title = opportunityTitle,
-                        description = opportunityDescription,
-                        date = opportunityDate,
-                        location = opportunityLocation,
-                        tarifs = opportunityTarifs,
-                        url = opportunityUrl,
-                        detailDescription = takeDetail[1],
-                    };
-                    opportunities.Add(opportunity);
+                        Console.WriteLine(str);
+                        Console.WriteLine(sentenceQuery);
+
+                        var opportunity = new Opportunity
+                        {
+                            id = opportunityId,
+                            title = opportunityTitle,
+                            description = opportunityDescription,
+                            date = opportunityDate,
+                            location = opportunityLocation,
+                            tarifs = opportunityTarifs,
+                            url = opportunityUrl,
+                            detailDescription = takeDetail[1],
+                        };
+                        opportunities.Add(opportunity);
+
+                    }
 
 
                     Console.WriteLine("-----------------------------------------------------------------------------------------");
