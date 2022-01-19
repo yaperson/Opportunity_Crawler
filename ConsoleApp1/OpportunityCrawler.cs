@@ -36,8 +36,6 @@ namespace ConsoleApp1
 
                     
                     var takeDetail = takeDetailOpportunity(opportunityUrl);
-                    //compareWord(takeDetail[1]);
-
 
                     var opportunityNode = node.ParentNode?.ParentNode;
                     if (opportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
@@ -151,28 +149,6 @@ namespace ConsoleApp1
 
 
             return detailOpportunity;
-        }
-        public void compareWord (string detailAll)
-        {
-            Console.WriteLine(" /--------------------------------------------/");
-            Console.WriteLine("//     analyse du contenu de l'annonce       //");
-            Console.WriteLine("/--------------------------------------------/");
-
-            string[] sentences = detailAll.Split(new char[] { '.', '?', '!' });
-            string[] wordsToMatch = { "développeur", "client" };
-            
-            var sentenceQuery = from sentence in sentences
-                                let w = sentence.Split(new char[] {'.', '?', '!', ' ', ';', ':', ',' },
-                                                        StringSplitOptions.RemoveEmptyEntries)
-                                where w.Distinct().Intersect(wordsToMatch).Count() == wordsToMatch.Count()
-                                select sentence;
-
-            foreach (var str in sentenceQuery)
-            {
-                Console.WriteLine(str);
-                Console.WriteLine(sentenceQuery);
-            }
-            Console.WriteLine("");
         }
     }
 }
