@@ -10,11 +10,11 @@ namespace ConsoleApp1
         public string id { get; set; }
         public string title { get; set; }
         public string description { get; set; }
-        public string detailDescription { get; set; }
+        public string company { get; set; }
         public string url { get; set; }
         public string date { get; set; }
         public string location { get; set; }
-        public string tarifs { get; set; }
+        public string rate { get; set; }
 
         //-----------------
         // j'ai remarqué que chaque anonce a déja son id indiqué dans la bare du navigateur 

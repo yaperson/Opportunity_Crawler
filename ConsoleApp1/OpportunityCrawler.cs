@@ -57,12 +57,12 @@ namespace ConsoleApp1
 
                     var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
                     var opportunityLocation = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
-                    var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
-                    var opportunityTarifs = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
+                   // var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
+                    var opportunityRate = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
 
 
                     string[] sentences = takeDetail[1].Split(new char[] { '.', '?', '!' });
-                    string[] wordsToMatch = { "client" };
+                    string[] wordsToMatch = { " " };
 
                     var sentenceQuery = from sentence in sentences
                                         let w = sentence.Split(new char[] { '.', '?', '!', ' ', ';', ':', ',' },
@@ -75,16 +75,17 @@ namespace ConsoleApp1
                         Console.WriteLine(str);
                         Console.WriteLine(sentenceQuery);
 
-                        var opportunity = new Opportunity
+                        var opportunity = new Opportunity // opportunityId - opportunityTitle - opportunityDate - opportunityUrl - detailDescription - detailDate - detailAll
                         {
                             id = opportunityId,
                             title = opportunityTitle,
-                            description = opportunityDescription,
+                            description = takeDetail[1],
+                            company = takeDetail[2],
                             date = opportunityDate,
                             location = opportunityLocation,
-                            tarifs = opportunityTarifs,
+                            rate = opportunityRate,
                             url = opportunityUrl,
-                            detailDescription = takeDetail[1],
+                            //detailDescription = takeDetail[1],
                         };
                         opportunities.Add(opportunity);
 
@@ -92,8 +93,8 @@ namespace ConsoleApp1
 
 
                     Console.WriteLine("-----------------------------------------------------------------------------------------");
-                    Console.WriteLine(" TITRE =  " + opportunityTitle + opportunityLocation + " " + opportunityDate + " DUREE / TARIFS = " + opportunityTarifs + " ID = " + opportunityId);
-                    Console.WriteLine(" DESCRIPTION = " + opportunityDescription);
+                    Console.WriteLine(" TITRE =  " + opportunityTitle + opportunityLocation + " " + opportunityDate + " DUREE / TARIFS = " + opportunityRate + " ID = " + opportunityId);
+                    // Console.WriteLine(" DESCRIPTION = " + opportunityDescription);
                     Console.WriteLine(" URL = " + opportunityUrl);
                 }
                 //loadNextPage(tokenUrl);
@@ -137,14 +138,17 @@ namespace ConsoleApp1
                 var detailNode = node.ParentNode?.ParentNode;
                 if (detailNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
 
-                var detailDate = detailNode.SelectSingleNode("//div[@class='textnoir9']")?.InnerText;
+                var detailDateCompany = detailNode.SelectSingleNode("//div[@class='textnoir9']")?.InnerText;
                 var detailAll = detailNode.SelectSingleNode("//div[@ class='row']/div[@ class='col-8 left']")?.InnerText;
-                var indexTeletravail = detailAll.LastIndexOf('%');
-                var detailTeletravail = detailAll.Substring(indexTeletravail, 3);
+                var indexCompany = detailDateCompany.LastIndexOf("par");
+                var detailCompany = detailDateCompany.Substring(indexCompany);
 
                 var detailDescription = detailNode.SelectSingleNode("//div[@ class='textnoir9 mt-3']")?.InnerText;
 
-                detailOpportunity = new string[] { detailDate, detailDescription, detailTeletravail, detailAll };
+                detailOpportunity = new string[] { detailCompany, detailDescription, detailAll };
+
+                Console.WriteLine(detailAll + " " + detailDescription + " " + detailCompany); // detailDescription - detailDate - detailAll
+
             }
 
 
