@@ -19,7 +19,7 @@ namespace ConsoleApp1
             //------
 
 
-            SqlCeConnection sqlConnect = new SqlCeConnection(@"Data Sourxce=D:\Projet pro\stage\2022\stage-crawler\dbOpportunity.sdf");
+            SqlCeConnection sqlConnect = new SqlCeConnection(@"Data Source=D:\Projet pro\stage\2022\stage-crawler\dbOpportunity.sdf");
 
 
             //------
