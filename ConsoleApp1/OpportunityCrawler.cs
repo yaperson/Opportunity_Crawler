@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data.SqlServerCe;
 
 namespace ConsoleApp1
 {
@@ -13,6 +14,15 @@ namespace ConsoleApp1
             List<Opportunity> opportunities = new List<Opportunity>();
 
             HtmlWeb web = new HtmlWeb();
+
+
+            //------
+
+
+            SqlCeConnection sqlConnect = new SqlCeConnection(@"Data Sourxce=D:\Projet pro\stage\2022\stage-crawler\dbOpportunity.sdf");
+
+
+            //------
 
             while (tokenUrl < 3) // scanne le nombre -1 (si on met 3, ça crawl sur 2 pages)
             {
@@ -34,7 +44,7 @@ namespace ConsoleApp1
                     if (opportunityUrl == oldUrl) continue;
                     oldUrl = opportunityUrl;
 
-                    
+
                     var takeDetail = takeDetailOpportunity(opportunityUrl);
 
                     var opportunityNode = node.ParentNode?.ParentNode;
@@ -57,7 +67,7 @@ namespace ConsoleApp1
 
                     var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
                     var opportunityLocation = opportunityNode.SelectSingleNode("span[@class='textvert9']")?.InnerText;
-                   // var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
+                    // var opportunityDescription = opportunityNode.SelectSingleNode("//*[@id='offre']/div/div[1]/div[2]")?.InnerText;
                     var opportunityRate = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[2]")?.InnerText;
 
 
