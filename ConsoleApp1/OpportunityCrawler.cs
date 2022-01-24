@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data.SqlServerCe;
 
 namespace ConsoleApp1
 {
@@ -18,8 +17,8 @@ namespace ConsoleApp1
 
             //------
 
-
-            SqlCeConnection sqlConnect = new SqlCeConnection(@"Data Source=D:\Projet pro\stage\2022\stage-crawler\dbOpportunity.sdf");
+            // MLB: J'ai supprimé le package
+            //SqlCeConnection sqlConnect = new SqlCeConnection(@"Data Source=D:\Projet pro\stage\2022\stage-crawler\dbOpportunity.sdf");
 
 
             //------
