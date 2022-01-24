@@ -69,6 +69,19 @@ namespace ConsoleApp1
 
 			return datatable;
 		}
+
+		public void  AddOpportunityRow(DataTable datatable)
+        {
+			var row = datatable.NewRow();
+			row["opportunity_id"] = Guid.NewGuid();
+			row["opportunity_title"] = "";
+			row["opportunity_date"] = "";
+			row["opportunity_url"] = "";
+			row["opportunity_description"] = "";
+			row["opportunity_details"] = "";
+			row["opportunity_company"] = "";
+			row["opportunity_rate"] = "";
+        }
 	}
 
 }
