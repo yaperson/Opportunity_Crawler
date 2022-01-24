@@ -4,10 +4,9 @@ using System.Linq;
 
 namespace ConsoleApp1
 {
-
 	public class OpportunityDataTable
 	{
-		public DataTable createOpportunityDataTable()
+		public DataTable CreateOpportunityDataTable()
 		{
 			var datatable = new DataTable();
 

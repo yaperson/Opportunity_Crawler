@@ -97,7 +97,6 @@ namespace ConsoleApp1
                             //detailDescription = takeDetail[1],
                         };
                         opportunities.Add(opportunity);
-
                     }
 
 
