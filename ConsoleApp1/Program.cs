@@ -12,8 +12,13 @@ namespace ConsoleApp1
             string url = string.Format("https://www.freelance-info.fr/missions?remote=1&page=");
             int tokenUrl = 1;
             var opportunities = opportunityCrowler.GetOpportunity(url, tokenUrl);
-            
-            Console.WriteLine(opportunities);
+
+            var datatable = new OpportunityDataTable();
+            var table = datatable.CreateOpportunityDataTable();
+            //var instert = datatable.AddOpportunityRow(table, opportunities);
+
+
+            Console.WriteLine(opportunities + " End of Program.cs - All is good");
         }
     }
 }

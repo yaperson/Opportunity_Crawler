@@ -68,19 +68,32 @@ namespace ConsoleApp1
 
 			return datatable;
 		}
+		public void AddOpportunityRow(DataTable datatable, OpportunityCrawler opportunity)
+		{
 
-		public void  AddOpportunityRow(DataTable datatable)
-        {
 			var row = datatable.NewRow();
 			row["opportunity_id"] = Guid.NewGuid();
-			row["opportunity_title"] = "";
-			row["opportunity_date"] = "";
-			row["opportunity_url"] = "";
-			row["opportunity_description"] = "";
-			row["opportunity_details"] = "";
-			row["opportunity_company"] = "";
-			row["opportunity_rate"] = "";
-        }
-	}
+			row["opportunity_title"] = opportunity;
+			row["opportunity_date"] = opportunity;
+			row["opportunity_url"] = opportunity;
+			row["opportunity_description"] = opportunity;
+			row["opportunity_details"] = opportunity;
+			row["opportunity_company"] = opportunity;
+			row["opportunity_rate"] = opportunity;
 
+			datatable.Rows.Add(row);
+
+			// J'ai trouvé cette maniere de faire sur la doc Microsoft
+			// https://docs.microsoft.com/fr-fr/dotnet/framework/data/adonet/dataset-datatable-dataview/adding-data-to-a-datatable
+			datatable.Rows.Add(new OpportunityCrawler()); 
+			
+			datatable.AcceptChanges();
+		}
+		public void FindOpportunityData()
+        {
+			var datatable = CreateOpportunityDataTable();
+			//AddOpportunityRow(datatable);
+        }
+
+	}
 }
