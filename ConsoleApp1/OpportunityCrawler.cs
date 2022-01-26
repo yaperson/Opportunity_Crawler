@@ -8,7 +8,7 @@ namespace ConsoleApp1
 {
     public class OpportunityCrawler
     {
-        public List<Opportunity> GetOpportunity(string url, int tokenUrl)
+        public List<Opportunity> GetOpportunityListFromFreelanceInfoWebSite(string url, int tokenUrl)
         {
             List<Opportunity> opportunities = new List<Opportunity>();
 

@@ -48,7 +48,7 @@ namespace ConsoleApp1
 
 			datatable.Columns.Add(new DataColumn()
 			{
-				ColumnName = "opportunity_details",
+				ColumnName = "opportunity_location",
 				DataType = typeof(string),
 				AllowDBNull = false
 			});
@@ -69,27 +69,27 @@ namespace ConsoleApp1
 
 			return datatable;
 		}
-		public void AddOpportunityRow(DataTable datatable, List<Opportunity> opportunities)
+		public void AddNewOpportunitiesRows(DataTable datatable, List<Opportunity> opportunities)
 		{
 
 			var row = datatable.NewRow();
 
-			Opportunity[] opportunity = {};
+			//Opportunity[] opportunities = {};
+			//opportunities.CopyTo(opportunity);
+			foreach (var opportunity in opportunities)
+			{
+				row["opportunity_id"] = Guid.NewGuid();
+				row["opportunity_title"] = opportunity.title;
+				row["opportunity_date"] = opportunity.date;
+				row["opportunity_url"] = opportunity.url;
+				row["opportunity_description"] = opportunity.description;
+				row["opportunity_details"] = opportunity.location;
+				row["opportunity_company"] = opportunity.company;
+				row["opportunity_rate"] = opportunity.rate;
 
-			opportunities.CopyTo(opportunity);
 
-			row["opportunity_id"] = Guid.NewGuid();
-			row["opportunity_title"] = opportunity[1];
-			row["opportunity_date"] = opportunity[2];
-			row["opportunity_url"] = opportunity[3];
-			row["opportunity_description"] = opportunity[4];
-			row["opportunity_details"] = opportunity[5];
-			row["opportunity_company"] = opportunity[6];
-			row["opportunity_rate"] = opportunity[7];
-			
-
-			datatable.Rows.Add(row);
-
+				datatable.Rows.Add(row);
+			}
 			// J'ai trouvé cette maniere de faire sur la doc Microsoft
 			// https://docs.microsoft.com/fr-fr/dotnet/framework/data/adonet/dataset-datatable-dataview/adding-data-to-a-datatable
 			// datatable.Rows.Add(opportunity); 
