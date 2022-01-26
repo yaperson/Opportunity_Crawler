@@ -15,7 +15,8 @@ namespace ConsoleApp1
 
             var datatable = new OpportunityDataTable();
             var table = datatable.CreateOpportunityDataTable();
-            //var instert = datatable.AddOpportunityRow(table, opportunities);
+
+            datatable.AddOpportunityRow(table, opportunities);
 
 
             Console.WriteLine(opportunities + " End of Program.cs - All is good");

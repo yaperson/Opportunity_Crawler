@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace ConsoleApp1
 {
@@ -27,7 +28,7 @@ namespace ConsoleApp1
 			datatable.Columns.Add(new DataColumn()
 			{
 				ColumnName = "opportunity_date",
-				DataType = typeof(DateTime),
+				DataType = typeof(string),
 				AllowDBNull = false
 			});
 
@@ -68,24 +69,30 @@ namespace ConsoleApp1
 
 			return datatable;
 		}
-		public void AddOpportunityRow(DataTable datatable, OpportunityCrawler opportunity)
+		public void AddOpportunityRow(DataTable datatable, List<Opportunity> opportunities)
 		{
 
 			var row = datatable.NewRow();
+
+			Opportunity[] opportunity = {};
+
+			opportunities.CopyTo(opportunity);
+
 			row["opportunity_id"] = Guid.NewGuid();
-			row["opportunity_title"] = opportunity;
-			row["opportunity_date"] = opportunity;
-			row["opportunity_url"] = opportunity;
-			row["opportunity_description"] = opportunity;
-			row["opportunity_details"] = opportunity;
-			row["opportunity_company"] = opportunity;
-			row["opportunity_rate"] = opportunity;
+			row["opportunity_title"] = opportunity[1];
+			row["opportunity_date"] = opportunity[2];
+			row["opportunity_url"] = opportunity[3];
+			row["opportunity_description"] = opportunity[4];
+			row["opportunity_details"] = opportunity[5];
+			row["opportunity_company"] = opportunity[6];
+			row["opportunity_rate"] = opportunity[7];
+			
 
 			datatable.Rows.Add(row);
 
 			// J'ai trouvé cette maniere de faire sur la doc Microsoft
 			// https://docs.microsoft.com/fr-fr/dotnet/framework/data/adonet/dataset-datatable-dataview/adding-data-to-a-datatable
-			datatable.Rows.Add(new OpportunityCrawler()); 
+			// datatable.Rows.Add(opportunity); 
 			
 			datatable.AcceptChanges();
 		}
