@@ -81,8 +81,8 @@ namespace ConsoleApp1
 
                     foreach (var str in sentenceQuery)
                     {
-                        Console.WriteLine(str);
-                        Console.WriteLine(sentenceQuery);
+                      Console.WriteLine(str);
+                      Console.WriteLine(sentenceQuery);
 
                         var opportunity = new Opportunity // opportunityId - opportunityTitle - opportunityDate - opportunityUrl - detailDescription - detailDate - detailAll
                         {

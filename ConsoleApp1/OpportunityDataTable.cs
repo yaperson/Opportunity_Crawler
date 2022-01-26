@@ -72,22 +72,22 @@ namespace ConsoleApp1
 		public void AddNewOpportunitiesRows(DataTable datatable, List<Opportunity> opportunities)
 		{
 
-			var row = datatable.NewRow();
-
 			//Opportunity[] opportunities = {};
 			//opportunities.CopyTo(opportunity);
 			foreach (var opportunity in opportunities)
 			{
+				var row = datatable.NewRow();
+
 				row["opportunity_id"] = Guid.NewGuid();
 				row["opportunity_title"] = opportunity.title;
 				row["opportunity_date"] = opportunity.date;
 				row["opportunity_url"] = opportunity.url;
 				row["opportunity_description"] = opportunity.description;
-				row["opportunity_details"] = opportunity.location;
+				row["opportunity_location"] = opportunity.location;
 				row["opportunity_company"] = opportunity.company;
 				row["opportunity_rate"] = opportunity.rate;
 
-
+				Console.WriteLine(opportunity);
 				datatable.Rows.Add(row);
 			}
 			// J'ai trouvé cette maniere de faire sur la doc Microsoft
@@ -95,6 +95,7 @@ namespace ConsoleApp1
 			// datatable.Rows.Add(opportunity); 
 			
 			datatable.AcceptChanges();
+			Console.WriteLine(datatable.Rows);
 		}
 		public void FindOpportunityData()
         {
