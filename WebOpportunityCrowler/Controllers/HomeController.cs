@@ -22,6 +22,8 @@ namespace WebOpportunityCrowler.Controllers
             var table = datatable.CreateOpportunityDataTable();
             datatable.AddNewOpportunitiesRows(table, opportunities);
 
+            ViewBag.data = datatable.getOpportunityData(table);
+
             return View();
         }
     }

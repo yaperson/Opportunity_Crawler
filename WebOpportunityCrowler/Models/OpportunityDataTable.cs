@@ -93,17 +93,49 @@ namespace WebOpportunityCrowler
 			DataSet opportunitiesDataTable = new DataSet();
 			opportunitiesDataTable.DataSetName = "opportunitiesDataTable";
 			opportunitiesDataTable.Tables.Add(datatable);
+
 			string routeDataTable = "D:/Projet pro/stage/2022/ASP-NET-TEST/WebOpportunityCrowler/WebOpportunityCrowler/App_Data/opportunitiesDataTable.xml";
-			// opportunitiesDataTable.ReadXml(routeDataTable);
-			opportunitiesDataTable.WriteXml(routeDataTable);
-
+			
+			opportunitiesDataTable.ReadXml(routeDataTable);
+			//opportunitiesDataTable.WriteXml(routeDataTable);
+			
 		}
-		public void WriteXmlOpportunityDataTable(List<Opportunity> opportunities)
+		public object getOpportunityData(DataTable table)
         {
-			var datatable = new OpportunityDataTable();
-			var table = datatable.CreateOpportunityDataTable();
-			datatable.AddNewOpportunitiesRows(table, opportunities);
-		}
 
+			/*
+			var contactRow = from row in table.Rows.Cast<DataRow>()
+							 where row.Field<string>("opportunity_title") != ""
+							 select row;
+			*/
+			//---
+
+			List<Opportunity> opportunities = new List<Opportunity>();
+
+			string expression = "opportunity_title is not null";
+			
+			string sortOrder = "opportunity_title ASC";
+			
+			DataRow[] foundRows;
+
+			foundRows = table.Select(expression, sortOrder);
+			
+			string label = "all rows";
+
+			Console.WriteLine("\n{0}", label);
+			if (foundRows.Length <= 0)
+			{
+				Console.WriteLine("no rows found");
+			}
+			foreach (DataRow row in foundRows)
+			{
+				foreach (DataColumn column in row.Table.Columns)
+				{
+					Console.Write("\table {0}", row[column]);
+					return row[column];
+				}
+				Console.WriteLine();
+			}
+		}
 	}
 }

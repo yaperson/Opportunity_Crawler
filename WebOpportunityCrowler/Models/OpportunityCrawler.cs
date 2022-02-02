@@ -95,6 +95,7 @@ namespace WebOpportunityCrowler
 
                     string[] sentences = takeDetail[1].Split(new char[] { });
                     string[] wordsArrayToMatch = {"Dev", "developpeur", "développeur"};
+                    string[] opportunityTest = {};
 
                     foreach (string wordsToMatch in wordsArrayToMatch)
                     {
@@ -109,24 +110,29 @@ namespace WebOpportunityCrowler
                             Console.WriteLine(str);
                             Console.WriteLine(sentenceQuery);
 
-                            var opportunity = new Opportunity
+                            int arrayIndex = Array.IndexOf(opportunityTest, opportunityId);
+                            if (arrayIndex > -1) break;
+                            else
                             {
-                                id = opportunityId,
-                                title = opportunityTitle,
-                                description = takeDetail[1],
-                                company = takeDetail[0],
-                                date = opportunityDate,
-                                location = opportunityLocation,
-                                rate = opportunityRate,
-                                url = opportunityUrl,
-                            };
-                            opportunities.Add(opportunity);
+                                var opportunity = new Opportunity
+                                {
+                                    id = opportunityId,
+                                    title = opportunityTitle,
+                                    description = takeDetail[1],
+                                    company = takeDetail[0],
+                                    date = opportunityDate,
+                                    location = opportunityLocation,
+                                    rate = opportunityRate,
+                                    url = opportunityUrl,
+                                };
+                                opportunityTest.Append(opportunityId);
+                                opportunities.Add(opportunity);
 
-                            Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.WriteLine("[ INFO = l'opportunité suivante a été ajoutée : " + opportunityUrl + " ]");
-                            Console.ForegroundColor = ConsoleColor.White;
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.WriteLine("[ INFO = l'opportunité suivante a été ajoutée : " + opportunityUrl + " ]");
+                                Console.ForegroundColor = ConsoleColor.White;
+                            }
                         }
-
                     }
 
                     Console.WriteLine("-----------------------------------------------------------------------------------------");
