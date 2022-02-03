@@ -103,13 +103,21 @@ namespace WebOpportunityCrowler
 		public object getOpportunityData(DataTable table)
         {
 
-			/*
+			
 			var contactRow = from row in table.Rows.Cast<DataRow>()
-							 where row.Field<string>("opportunity_title") != ""
-							 select row;
-			*/
+							 select new
+							 {
+								col1 = row.Field<string>(1),//column of index 0 = "Col1"
+								col2 = row.Field<string>(2),//column of index 1 = "Col2"
+								col3 = row.Field<string>(3),//column of index 5 = "Col6"
+								col4 = row.Field<string>(4),//column of index 6 = "Col7"
+								col5 = row.Field<string>(5),//column of index 4 = "Col3"
+								col6 = row.Field<string>(6),//column of index 4 = "Col3"
+								col7 = row.Field<string>(7),//column of index 4 = "Col3"
+							 };
+			
 			//---
-
+			/*
 			string expression = "opportunity_title is not null";
 			
 			string sortOrder = "opportunity_title ASC";
@@ -118,15 +126,8 @@ namespace WebOpportunityCrowler
 
 			foundRows = table.Select(expression, sortOrder);
 			
-			string label = "all rows";
-
-			Console.WriteLine("\n{0}", label);
-			if (foundRows.Length <= 0)
-			{
-				Console.WriteLine("no rows found");
-			}
 			object[] row2 = { };
-			foreach (DataRow row in foundRows)
+			foreach (DataRow row in contactRow)
 			{
 				//foreach (DataColumn column in row.Table.Columns)
 				//{
@@ -135,8 +136,8 @@ namespace WebOpportunityCrowler
 				//}
 				Console.WriteLine();
 				row2 = row.ItemArray; // Retourne une ligne avec toutes ces colonnes
-			}
-			return row2;
+			}*/
+			return contactRow;
 		}
 	}
 }
