@@ -15,16 +15,7 @@ namespace WebOpportunityCrowler
 
             HtmlWeb web = new HtmlWeb();
 
-
-            //------
-
-            // MLB: J'ai supprimé le package
-            //SqlCeConnection sqlConnect = new SqlCeConnection(@"Data Source=D:\Projet pro\stage\2022\stage-crawler\dbOpportunity.sdf");
-
-
-            //------
-
-            while (tokenUrl < 3) // scanne le nombre -1 (si on met 3, ça crawl sur 2 pages)
+            while (tokenUrl < 1) // scanne le nombre -1 (si on met 3, ça crawl sur 2 pages)
             {
                 url = url + tokenUrl;
 
@@ -44,21 +35,14 @@ namespace WebOpportunityCrowler
                     if (opportunityUrl == oldUrl) continue;
                     oldUrl = opportunityUrl;
 
-
                     var takeDetail = takeDetailOpportunity(opportunityUrl);
 
                     var opportunityNode = node.ParentNode?.ParentNode;
                     if (opportunityNode == null) throw new Exception("Impossible de remonter vers l'opportunité.");
 
-                    //------------
-
-                    // Au vu du fait que l'on utilise les GUID, est il toujours necessaire de récuperer l'ID ?
-
                     var idIndex = opportunityUrl.LastIndexOf('-');
                     string opportunityId = opportunityUrl.Substring(idIndex, 7);
                     opportunityId = opportunityId.Substring(1, 6);
-
-                    //------------
 
                     var opportunityStatus = opportunityNode.SelectSingleNode("div[@class='rlig_det']/span[1]")?.InnerText;
                     var opportunityStatusRead = "Lu";

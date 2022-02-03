@@ -1,14 +1,14 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -31,10 +31,15 @@
     <div class="container body-content">
         @RenderBody()
 
-        @foreach (string data in ViewBag.data)
+        @foreach (var row in ViewBag.data)
         {
-        <p>id: @ViewBag.data[0]</p>
-        <p>company: @ViewBag.data[1]</p>
+            foreach (var data in row)
+    		{
+                <p>id: data[0]</p>
+                <p>opportunity title: data[1]</p>
+                <p>date: data[2]</p>
+                <p>url: data[3]</p>
+            }
         }
 
         <hr />

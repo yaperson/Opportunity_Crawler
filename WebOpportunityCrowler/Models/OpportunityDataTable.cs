@@ -110,8 +110,6 @@ namespace WebOpportunityCrowler
 			*/
 			//---
 
-			List<Opportunity> opportunities = new List<Opportunity>();
-
 			string expression = "opportunity_title is not null";
 			
 			string sortOrder = "opportunity_title ASC";
@@ -127,16 +125,16 @@ namespace WebOpportunityCrowler
 			{
 				Console.WriteLine("no rows found");
 			}
-			object row2 = null;
+			object[] row2 = { };
 			foreach (DataRow row in foundRows)
 			{
-				foreach (DataColumn column in row.Table.Columns)
-				{
-					Console.Write("\table {0}", row[column]);
-					// rowArray.Append(row[column]);
-				}
+				//foreach (DataColumn column in row.Table.Columns)
+				//{
+				//	Console.Write("\table {0}", row[column]);
+				//	// rowArray.Append(row[column]);
+				//}
 				Console.WriteLine();
-				row2 = row.ItemArray;
+				row2 = row.ItemArray; // Retourne une ligne avec toutes ces colonnes
 			}
 			return row2;
 		}
