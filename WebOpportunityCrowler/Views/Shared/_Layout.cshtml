@@ -30,7 +30,13 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        @ViewBag.data
+
+        @foreach (string data in ViewBag.data)
+        {
+        <p>id: @ViewBag.data[0]</p>
+        <p>company: @ViewBag.data[1]</p>
+        }
+
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Mon application ASP.NET</p>

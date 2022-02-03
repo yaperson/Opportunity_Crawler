@@ -127,15 +127,18 @@ namespace WebOpportunityCrowler
 			{
 				Console.WriteLine("no rows found");
 			}
+			object row2 = null;
 			foreach (DataRow row in foundRows)
 			{
 				foreach (DataColumn column in row.Table.Columns)
 				{
 					Console.Write("\table {0}", row[column]);
-					return row[column];
+					// rowArray.Append(row[column]);
 				}
 				Console.WriteLine();
+				row2 = row.ItemArray;
 			}
+			return row2;
 		}
 	}
 }

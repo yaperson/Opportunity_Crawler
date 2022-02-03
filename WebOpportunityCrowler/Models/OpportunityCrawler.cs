@@ -111,7 +111,7 @@ namespace WebOpportunityCrowler
                             Console.WriteLine(sentenceQuery);
 
                             int arrayIndex = Array.IndexOf(opportunityTest, opportunityId);
-                            if (arrayIndex > -1) break;
+                            if (arrayIndex > -1) Console.Write("Ligne 114");
                             else
                             {
                                 var opportunity = new Opportunity
