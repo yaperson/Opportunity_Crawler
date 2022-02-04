@@ -10,7 +10,7 @@ namespace WebOpportunityCrowler.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Title = "Home Page";
+            ViewBag.Title = "opportunities web crawler";
 
             var opportunityCrowler = new OpportunityCrawler();
 

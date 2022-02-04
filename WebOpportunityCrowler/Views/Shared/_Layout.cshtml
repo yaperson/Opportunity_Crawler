@@ -30,21 +30,38 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-
-        @foreach (var row in ViewBag.data)
-        {
-            foreach (var data in row)
-    		{
-                <p>id: data[0]</p>
-                <p>opportunity title: data[1]</p>
-                <p>date: data[2]</p>
-                <p>url: data[3]</p>
-            }
-        }
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Url</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in ViewBag.data)
+                {
+                <tr>
+                    <th scope="row">1</th>
+                    <td> @row.title</td>
+                    <td> @row.date</td>
+                    <td> <a href="@row.url">see more</a></td>
+                    <td> @row.description</td>
+                    <td> @row.location</td>
+                    <td> @row.company</td>
+                    <td> @row.rate</td>
+                </tr>
+                }
+            </tbody>
+        </table>
 
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Mon application ASP.NET</p>
+            <p>&copy; @DateTime.Now.Year - opportunities web crawler ASP.NET</p>
         </footer>
     </div>
 

@@ -97,6 +97,7 @@ namespace WebOpportunityCrowler
 			string routeDataTable = "D:/Projet pro/stage/2022/ASP-NET-TEST/WebOpportunityCrowler/WebOpportunityCrowler/App_Data/opportunitiesDataTable.xml";
 			
 			opportunitiesDataTable.ReadXml(routeDataTable);
+			opportunitiesDataTable.ReadXml(routeDataTable, XmlReadMode.ReadSchema);
 			//opportunitiesDataTable.WriteXml(routeDataTable);
 			
 		}
@@ -105,15 +106,15 @@ namespace WebOpportunityCrowler
 
 			
 			var contactRow = from row in table.Rows.Cast<DataRow>()
-							 select new
+							 select new Opportunity
 							 {
-								col1 = row.Field<string>(1),//column of index 0 = "Col1"
-								col2 = row.Field<string>(2),//column of index 1 = "Col2"
-								col3 = row.Field<string>(3),//column of index 5 = "Col6"
-								col4 = row.Field<string>(4),//column of index 6 = "Col7"
-								col5 = row.Field<string>(5),//column of index 4 = "Col3"
-								col6 = row.Field<string>(6),//column of index 4 = "Col3"
-								col7 = row.Field<string>(7),//column of index 4 = "Col3"
+								title = row.Field<string>(1),//column of index 0 = "Col1"
+								date = row.Field<string>(2),//column of index 1 = "Col2"
+								url = row.Field<string>(3),//column of index 5 = "Col6"
+								description = row.Field<string>(4),//column of index 6 = "Col7"
+								location = row.Field<string>(5),//column of index 4 = "Col3"
+								company = row.Field<string>(6),//column of index 4 = "Col3"
+								rate = row.Field<string>(7),//column of index 4 = "Col3"
 							 };
 			
 			//---
