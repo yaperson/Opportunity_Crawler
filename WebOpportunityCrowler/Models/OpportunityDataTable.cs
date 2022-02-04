@@ -95,16 +95,13 @@ namespace WebOpportunityCrowler
 			opportunitiesDataTable.Tables.Add(datatable);
 
 			string routeDataTable = "D:/Projet pro/stage/2022/ASP-NET-TEST/WebOpportunityCrowler/WebOpportunityCrowler/App_Data/opportunitiesDataTable.xml";
-			
+
 			opportunitiesDataTable.ReadXml(routeDataTable);
-			opportunitiesDataTable.ReadXml(routeDataTable, XmlReadMode.ReadSchema);
 			//opportunitiesDataTable.WriteXml(routeDataTable);
 			
 		}
 		public object getOpportunityData(DataTable table)
         {
-
-			
 			var contactRow = from row in table.Rows.Cast<DataRow>()
 							 select new Opportunity
 							 {
@@ -116,28 +113,7 @@ namespace WebOpportunityCrowler
 								company = row.Field<string>(6),//column of index 4 = "Col3"
 								rate = row.Field<string>(7),//column of index 4 = "Col3"
 							 };
-			
-			//---
-			/*
-			string expression = "opportunity_title is not null";
-			
-			string sortOrder = "opportunity_title ASC";
-			
-			DataRow[] foundRows;
 
-			foundRows = table.Select(expression, sortOrder);
-			
-			object[] row2 = { };
-			foreach (DataRow row in contactRow)
-			{
-				//foreach (DataColumn column in row.Table.Columns)
-				//{
-				//	Console.Write("\table {0}", row[column]);
-				//	// rowArray.Append(row[column]);
-				//}
-				Console.WriteLine();
-				row2 = row.ItemArray; // Retourne une ligne avec toutes ces colonnes
-			}*/
 			return contactRow;
 		}
 	}

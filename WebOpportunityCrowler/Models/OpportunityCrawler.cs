@@ -15,7 +15,7 @@ namespace WebOpportunityCrowler
 
             HtmlWeb web = new HtmlWeb();
 
-            while (tokenUrl < 1) // scanne le nombre -1 (si on met 3, ça crawl sur 2 pages)
+            while (tokenUrl < 3) // scanne le nombre -1 (si on met 3, ça crawl sur 2 pages)
             {
                 url = url + tokenUrl;
 
@@ -51,7 +51,7 @@ namespace WebOpportunityCrowler
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("[ WARNING = Opportunités déjà lus ]");
                         Console.ForegroundColor = ConsoleColor.White;
-                        //    break;
+                        break;
                     }
 
                     var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
@@ -63,7 +63,7 @@ namespace WebOpportunityCrowler
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("[ ERROR = écart de date trop important ] [ " + tokenUrl +" page(s) scané(s) ]");
                         Console.ForegroundColor = ConsoleColor.White;
-                        //continue;
+                        continue;
                     }
 
                     var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
@@ -95,7 +95,7 @@ namespace WebOpportunityCrowler
                             Console.WriteLine(sentenceQuery);
 
                             int arrayIndex = Array.IndexOf(opportunityTest, opportunityId);
-                            if (arrayIndex > -1) Console.Write("Ligne 114");
+                            if (arrayIndex > -1) break;
                             else
                             {
                                 var opportunity = new Opportunity
