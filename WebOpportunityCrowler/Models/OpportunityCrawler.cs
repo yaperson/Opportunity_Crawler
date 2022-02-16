@@ -2,14 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text; // a voir l'utilité
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace WebOpportunityCrowler
 {
     public class OpportunityCrawler
     {
-        public List<Opportunity> GetOpportunityListFromFreelanceInfoWebSite(string url, int tokenUrl)
+        public async Task<List<Opportunity>> GetOpportunityListFromFreelanceInfoWebSite(string url, int tokenUrl)
         {
             List<Opportunity> opportunities = new List<Opportunity>();
 
@@ -51,7 +51,7 @@ namespace WebOpportunityCrowler
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("[ WARNING = Opportunités déjà lus ]");
                         Console.ForegroundColor = ConsoleColor.White;
-                        break;
+                        //break;
                     }
 
                     var opportunityDate = opportunityNode.SelectSingleNode("span[@class='textgrisfonce9']")?.InnerText;
@@ -63,7 +63,7 @@ namespace WebOpportunityCrowler
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("[ ERROR = écart de date trop important ] [ " + tokenUrl +" page(s) scané(s) ]");
                         Console.ForegroundColor = ConsoleColor.White;
-                        continue;
+                        //continue;
                     }
 
                     var opportunityTitle = opportunityNode.SelectSingleNode("div[@id='titre-mission']")?.InnerText;
@@ -135,7 +135,7 @@ namespace WebOpportunityCrowler
             Console.WriteLine("+---------------------------+");
             Console.WriteLine("");
 
-            return opportunities;
+            return await opportunities;
         }
         public string[] takeDetailOpportunity(string Url)
         {
