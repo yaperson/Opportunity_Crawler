@@ -9,7 +9,7 @@ namespace WebOpportunityCrowler
 {
     public class OpportunityCrawler
     {
-        public async Task<List<Opportunity>> GetOpportunityListFromFreelanceInfoWebSite(string url, int tokenUrl)
+        public List<Opportunity> GetOpportunityListFromFreelanceInfoWebSite(string url, int tokenUrl)
         {
             List<Opportunity> opportunities = new List<Opportunity>();
 
@@ -135,7 +135,7 @@ namespace WebOpportunityCrowler
             Console.WriteLine("+---------------------------+");
             Console.WriteLine("");
 
-            return await opportunities;
+            return opportunities;
         }
         public string[] takeDetailOpportunity(string Url)
         {

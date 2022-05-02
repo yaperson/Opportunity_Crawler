@@ -19,7 +19,6 @@ namespace WebOpportunityCrowler.Controllers
                 dayCrawl(table, datatable);
                 crawlDate = DateTime.Today;
             }
-            
 
             ViewBag.data = datatable.getOpportunityData(table);
 

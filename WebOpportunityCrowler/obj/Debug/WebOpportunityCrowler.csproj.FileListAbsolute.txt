@@ -88,7 +88,6 @@ D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowle
 D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\bin\fr\System.Web.WebPages.resources.dll
 D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\bin\fr\System.Web.WebPages.Deployment.resources.dll
 D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\bin\fr\System.Web.WebPages.Razor.resources.dll
-D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\obj\Debug\WebOpportunityCrowler.csprojAssemblyReference.cache
 D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\obj\Debug\WebOpportunityCrowler.csproj.CoreCompileInputs.cache
 D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\obj\Debug\WebOpportunityCrowler.csproj.CopyComplete
 D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\obj\Debug\WebOpportunityCrowler.dll
@@ -145,3 +144,4 @@ D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowle
 D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\bin\System.Numerics.Vectors.xml
 D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\bin\System.Runtime.CompilerServices.Unsafe.xml
 D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\bin\System.Threading.Tasks.Extensions.xml
+D:\Projet pro\stage\2022\ASP-NET-TEST\WebOpportunityCrowler\WebOpportunityCrowler\obj\Debug\WebOpportunityCrowler.csproj.AssemblyReference.cache
