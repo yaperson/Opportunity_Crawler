@@ -2,9 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: [ master ]
+    branches: [ Opportunity_crawler ]
   pull_request:
-    branches: [ master ]
+    branches: [ Opportunity_crawler ]
 
 jobs:
   build:
